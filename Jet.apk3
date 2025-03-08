@@ -1,0 +1,21 @@
+import cadquery as cq
+
+# Conveyor Belt (Base)
+conveyor = cq.Workplane("XY").box(100, 20, 5)
+
+# AI Scanner Box (Above Conveyor)
+scanner = cq.Workplane("XY").box(15, 10, 10).translate((0, 0, 10))
+
+# Sorting Output Bins (Three Bins)
+bin1 = cq.Workplane("XY").box(20, 10, 10).translate((40, -15, -5))
+bin2 = cq.Workplane("XY").box(20, 10, 10).translate((40, 0, -5))
+bin3 = cq.Workplane("XY").box(20, 10, 10).translate((40, 15, -5))
+
+# Combine all parts into one model
+sorting_system = conveyor.union(scanner).union(bin1).union(bin2).union(bin3)
+
+# Export to STL file
+cq.exporters.export(sorting_system, 'AI-JetSort-MultiMat.stl')
+
+# Show in CADQuery Viewer (Optional)
+show_object(sorting_system)
